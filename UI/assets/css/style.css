@@ -232,7 +232,7 @@ hr {
 .admin {
     display: block;
     background: none;
-    background-color: #EBEFF2 !important;
+    background-color: rgb(193, 198, 202) !important;
     color: #333;
     margin-left: 0;
 }
