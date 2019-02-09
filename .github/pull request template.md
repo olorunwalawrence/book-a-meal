@@ -5,9 +5,9 @@ create express setup
 - install nodemon
 - Install body-parser
 #### How to manually test this PR
-- clone the [repo ](https://github.com/olorunwalawrence/biz-connect)
-- on your terninal, run `git checkout ch-setup-express-161847860`
-- on your terminal run npm install. _this wil install all packages_
+- clone the [repo ](https://github.com/olorunwalawrence/book-a-meal)
+- on your terninal, run `git checkout `
+
 
 
 #### What is the story identity?
