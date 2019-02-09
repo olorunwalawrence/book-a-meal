@@ -1,14 +1,14 @@
 const cardInfo = [
   {
-    img: 'http://www.preciouscore.com/wp-content/uploads/2017/11/How-to-cook-jollof-rice-in-the-oven-750x500.jpg',
-    title: 'Jollof Rice Meal',
-    desc: 'Jollof Rice, Beef and Plantain. 2 pieces of beef per plate',
+    img: 'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fgrilled-flank-steak-cherry-pecan-rice-ck.jpg%3Fitok%3DG3CZbicH&w=450&c=sc&poi=face&q=85',
+    title: 'rice with beaf',
+    desc: 'Jollof Rice, Beef and Plantain. 4 pieces of beef per plate',
     price: 1500
   },
   {
-    img: 'https://images.unsplash.com/photo-1503764654157-72d979d9af2f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=71cdddf5cc615224cf2c26614d20154d&auto=format&fit=crop&w=1053&q=80',
-    title: 'Revenge Body Spag',
-    desc: 'Meal consists of Spaghetti, Vegetable Salad and Shredded smoked chicken',
+    img: 'https://media-cdn.tripadvisor.com/media/photo-s/0c/17/d2/ec/endless-beef-ribs-with.jpg',
+    title: 'beef with fires',
+    desc: 'Meal consists fries, tomatos, beefs',
     price: 2200
   },
   {
@@ -41,12 +41,7 @@ const cardInfo = [
     desc: 'Meals also contains Meat/Fish',
     price: 2000
   },
-  {
-    img: 'https://i0.wp.com/www.eatingnigerian.com/wp-content/uploads/2016/08/Yam-and-Plantain-Pottage-21.jpg',
-    title: 'Yam and Plantain Pottage',
-    desc: '',
-    price: 1200
-  },
+
   {
     img: 'https://lagosmums.com/wp-content/uploads/2015/06/Jollof-Spaghetti.jpeg',
     title: 'Jollof Spaghetti, Plantain and Turkey',
