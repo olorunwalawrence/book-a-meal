@@ -15,7 +15,7 @@ form label {
 .form-input {
     color: darkgray;
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom:30px;
     flex-direction: column;
 }
 
@@ -114,7 +114,7 @@ form label {
 }
 
 .form-extra-info a {
-    color: #4CAF50;
+    color: rgb(67, 87, 67);
 }
 
 .form-extra-info a:hover,

@@ -15,7 +15,7 @@ $('form').on('submit', (e) => {
 
   // console.log(email);
 
-  if (email === 'food@circle.com') {
+  if (email === 'bookameal@mail.com') {
     console.log(email);
     window.location.href = './dashboard.html';
   } else {

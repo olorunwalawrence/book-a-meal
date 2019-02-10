@@ -6,7 +6,7 @@
 }
 
 .order-history-pill a {
-    color: #666666;
+    color: #020202;
 }
 
 .order-history-pill .order-history-header,
@@ -28,14 +28,14 @@
 }
 
 .order-history-pill .order-history-footer h2 {
-    color: #4CAF50;
+    color: orange;
 }
 
 .order-history-pill:hover,
 .order-history-pill:focus,
 .order-history-pill:active {
     cursor: pointer;
-    -webkit-animation: 0.3s jump;
+    -webkit-animation: 1s jump;
     animation: 0.3s jump;
 }
 
