@@ -125,15 +125,3 @@ $('.caterer-meals #card-group').html(catererMealCards);
 $('.menu-meals #card-group').html(menuMealCards);
 $('.user-meals #card-group').html(userMealCards);
 
-// $('.meal-card').on('click', '.meal-card-header', function() {
-//   $(this).parent().toggleClass('no-content');
-//   $(this).next('.meal-card-body').toggle(250, 'linear');
-//   $(this).find('#edit-meal').on('click', function(e) {
-//     console.log('tyay');
-//     return showModal(e, mealModal);
-//   })
-// });
-
-// if (e.target !== e.currentTarget && (e.target.id === 'edit-meal' || e.target.id === 'delete-meal')) {
-//   showModal(e, mealModal);
-// }

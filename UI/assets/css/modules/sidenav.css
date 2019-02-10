@@ -46,7 +46,7 @@
 .sidenav-content {
     height: 100%;
     width: 250px;
-    background-color: #FFFFFF;
+    background-color: rgb(226, 222, 222);
     overflow-x: hidden;
 }
 
