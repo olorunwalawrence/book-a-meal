@@ -6,7 +6,9 @@ create express setup
 - Install body-parser
 #### How to manually test this PR
 - clone the [repo ](https://github.com/olorunwalawrence/book-a-meal)
-- on your terninal, run `git checkout `
+- on your terminal, run `git checkout  `
+- on your terminal, run npm install to install dependencies
+- on your terminal, run npm run start:dev to start the application.
 
 
 
