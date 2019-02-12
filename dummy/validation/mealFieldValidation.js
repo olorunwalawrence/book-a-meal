@@ -15,7 +15,7 @@ export default class Validator {
     const { img, title, description, price } = req.body;
     try {
       const regex = /^[a-zA-Z\s]*$/;
-      if (img === '') {
+      if (img.trim() === '') {
         return res.status(400).json({ message: ' Image field cannot be empty' });
       }
       if (!regex.test(title)) {
@@ -26,11 +26,7 @@ export default class Validator {
       if (description.trim() === '') {
         return res.status(400).json({ message: 'Description cannot be empty' });
       }
-      // if (!regex.test(description)) {
-      //   return res
-      //     .status(400)
-      //     .json({ message: 'decription can only contain letter' });
-      // }
+    
       if (price.trim() === '') {
         return res
           .status(400)
