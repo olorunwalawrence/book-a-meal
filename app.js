@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import route from './dummy/route/index';
+import route from './dummy/route';
+
 const app = express();
 
 const port = parseInt(process.env.PORT, 10) || 5000;

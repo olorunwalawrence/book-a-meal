@@ -7,5 +7,4 @@ const { getAllMeal } = mealController;
 
 router.get('/meals', getAllMeal);
 
-// eslint-disable-next-line eol-last
 export default router;
