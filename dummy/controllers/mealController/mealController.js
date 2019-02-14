@@ -52,4 +52,24 @@ export default class Meal {
   static getAllMeal(req, res) {
     getAllMeals(res, mealDb);
   }
+
+    /**
+   * deletemeal()
+   * @desc deletes a meal
+   * @param {*} req
+   * @param {*} res
+   * @returns {object} deletedmeal
+   */
+  static deleteMeal(req, res) {
+    for (let i = 0; i < mealDb.length; i += 1) {
+      if (mealDb[i].id === parseInt(req.params.id, 10)) {
+        mealDb.splice(i, 1);
+        return res.status(200).json({
+          status:200,
+          message: 'seleted meal successfully deleted'
+          });
+      }
+    }
+    return res.status(404).send('404, meal not found');
+  }
 }

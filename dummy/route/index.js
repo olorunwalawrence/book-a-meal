@@ -4,10 +4,11 @@ import validation from '../validation/mealFieldValidation';
 
 const router = express.Router();
 
-const { getAllMeal, createMeal } = mealController;
+const { getAllMeal, createMeal,deleteMeal  } = mealController;
 const { mealValidation } = validation;
 
 router.post('/meals', mealValidation, createMeal);
 router.get('/meals', getAllMeal);
+router.delete('meal/:id', deleteMeal)
 
 export default router;
