@@ -5,7 +5,7 @@ import orderController from '../controllers/orderController/orderController';
 import validation from '../validation/mealFieldValidation';
 
 const router = express.Router();
-const { makeOrder } = orderController;
+const { makeOrder, updateOrder } = orderController;
 const { setMenu, getAllMenu } = menuController;
 const {
   getAllMeal, createMeal, deleteMeal, updateMeal
@@ -19,5 +19,6 @@ router.get('/meals', getAllMeal);
 router.get('/menu', getAllMenu);
 router.delete('/meal/:id', deleteMeal);
 router.put('/meal/:id', updateMeal);
+router.put('/orders/:id', updateOrder);
 
 export default router;
