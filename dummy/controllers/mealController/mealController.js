@@ -52,6 +52,39 @@ export default class Meal {
   static getAllMeal(req, res) {
     getAllMeals(res, mealDb);
   }
+  
+   // Update meal option
+
+  /**
+   *
+   * @param {*} req  THE REQUEST OBJECT
+   * @param {*} res   THE RESPONSE OBJECT
+   * @param {*} json  THE  RETURN JSON
+   */
+  static updateMeal(req, res) {
+    let updatedMeal = {};
+    const { id } = req.params;
+    mealDb.forEach((meals) => {
+      if (meals.id === parseInt(id, 10)) {
+        meals.img = req.body.img || meals.img;
+        meals.desc = req.body.description || meals.desc;
+        meals.title = req.body.title || meals.title;
+        meals.price = req.body.price || meals.price;
+        updatedMeal = meals;
+      }
+    });
+    if (updatedMeal) {
+      return res.status(200).json({
+        status: 200,
+        data: updatedMeal
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: 'meal not found'
+    });
+  }
+
 
     /**
    * deletemeal()
