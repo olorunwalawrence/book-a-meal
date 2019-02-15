@@ -53,5 +53,7 @@ export default class Menu {
   static getAllMenu(req, res) {
     getmenus(res, menuDb);
   }
+
   
+
 }
