@@ -1,6 +1,7 @@
+/* eslint-disable valid-jsdoc */
 import menuDb from '../../db/menu';
 import fieldValidation from '../../validation/mealFieldRequiredValidation';
-
+import getmenus from '../../utils/helper';
 // const { mealFieldRequiredValidation } = Validation;
 
 // eslint-disable-next-line require-jsdoc
@@ -42,4 +43,15 @@ export default class Menu {
       message: 'menu set successfully'
     });
   }
+
+ // Get all menu
+  /**
+   *
+   * @param {*} req  THE REQUEST OBJECT
+   * @param {*} res   THE RESPONSE OBJECT
+   */
+  static getAllMenu(req, res) {
+    getmenus(res, menuDb);
+  }
+  
 }
