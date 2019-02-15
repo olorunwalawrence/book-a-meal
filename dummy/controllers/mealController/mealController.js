@@ -42,7 +42,7 @@ export default class Meal {
   }
 
 
-  // Get all political party
+  // Get all meals
 
   /**
    *
