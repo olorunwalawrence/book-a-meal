@@ -1,5 +1,5 @@
+import shortid from 'shortid';
 import orderDb from '../../db/order';
-import mealFieldRequired from '../../validation/mealFieldRequiredValidation';
 import getMealOrders from '../../utils/helper';
 /* eslint-disable valid-jsdoc */
 /* eslint-disable require-jsdoc */
@@ -18,7 +18,7 @@ export default class Order {
 
 
     const data = {
-      id: orderDb.length + 1,
+      id: shortid.generate(),
       img,
       title: title.toLowerCase(),
       descrition: description.toLowerCase(),

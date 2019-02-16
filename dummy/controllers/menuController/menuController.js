@@ -1,4 +1,5 @@
 /* eslint-disable valid-jsdoc */
+import shortid from 'shortid';
 import menuDb from '../../db/menu';
 import getmenus from '../../utils/helper';
 // const { mealFieldRequiredValidation } = Validation;
@@ -27,7 +28,7 @@ export default class Menu {
     }
 
     const data = {
-      id: menuDb.length + 1,
+      id: shortid.generate(),
       img,
       title: title.toLowerCase(),
       descrition: description.toLowerCase(),
@@ -37,8 +38,8 @@ export default class Menu {
     // PUSH DATA INTO DUMMY DATABASE
 
     menuDb.push(data);
-    return res.status(200).json({
-      status: 200,
+    return res.status(201).json({
+      status: 201,
       message: 'menu set successfully'
     });
   }

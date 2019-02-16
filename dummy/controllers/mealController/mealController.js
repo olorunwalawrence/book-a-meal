@@ -24,7 +24,7 @@ export default class Meal {
       Title => Title.title === title.toLowerCase()
     );
     if (!result.length < 1) {
-      return res.status(400).json({
+      return res.status(409).json({
         message: 'Meal title already exist'
       });
     }
