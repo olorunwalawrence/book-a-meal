@@ -23,3 +23,5 @@ app.route('/*').all((req, res) => res.status(404).json({
 app.listen(port, (err) => {
   console.log('server is up and running');
 });
+
+export default app;

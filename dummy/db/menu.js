@@ -1,4 +1,3 @@
 export default [
-    {dbname: 'menu'},
-
-]
+  { dbname: 'menu' }
+];

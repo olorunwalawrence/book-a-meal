@@ -1,6 +1,5 @@
 /* eslint-disable valid-jsdoc */
 import menuDb from '../../db/menu';
-import fieldValidation from '../../validation/mealFieldRequiredValidation';
 import getmenus from '../../utils/helper';
 // const { mealFieldRequiredValidation } = Validation;
 
@@ -17,14 +16,14 @@ export default class Menu {
     const {
       img, title, description, price
     } = req.body;
-    fieldValidation(img, title, description, price, res);
+
 
     const result = menuDb.filter(
       (Title) => Title.title === title.toLowerCase()
     );
 
     if (!result.length < 1) {
-      return res.status(400).json({ message: 'Menu  already set' });
+      return res.status(409).json({ message: 'Menu  already set' });
     }
 
     const data = {

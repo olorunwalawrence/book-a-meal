@@ -16,7 +16,6 @@ export default class Order {
       img, title, description, price
     } = req.body;
 
-    mealFieldRequired(img, title, description, price, res);
 
     const data = {
       id: orderDb.length + 1,
