@@ -1,4 +1,12 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/58dd494b4abf4b899da1/maintainability)](https://codeclimate.com/github/olorunwalawrence/book-a-meal/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/58dd494b4abf4b899da1/test_coverage)](https://codeclimate.com/github/olorunwalawrence/book-a-meal/test_coverage)
+
+[![Coverage Status](https://coveralls.io/repos/github/olorunwalawrence/book-a-meal/badge.svg?branch=develop)](https://coveralls.io/github/olorunwalawrence/book-a-meal?branch=develop)
+
+
 # book-a-meal
+
 
 * book a meal is a web application that allows users  to book for his/her favorite meal and also allows caterers to create and set meal for the day
 
