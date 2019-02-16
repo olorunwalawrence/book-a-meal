@@ -1,8 +1,10 @@
+/* eslint-disable valid-jsdoc */
+/* eslint-disable require-jsdoc */
+import shortid from 'shortid';
 import mealDb from '../../db/meal';
 import getAllMeals from '../../utils/helper';
 import mealFieldRequired from '../../validation/mealFieldRequiredValidation';
-/* eslint-disable valid-jsdoc */
-/* eslint-disable require-jsdoc */
+
 
 export default class Meal {
   /**
@@ -22,10 +24,14 @@ export default class Meal {
       Title => Title.title === title.toLowerCase()
     );
     if (!result.length < 1) {
-      return res.status(400).json({ message: 'Meal title already exist' });
+      return res.status(409).json({
+        message: 'Meal title already exist'
+      });
     }
+
+
     const data = {
-      id: mealDb.length + 1,
+      id: shortid.generate(),
       img,
       title: title.toLowerCase(),
       descrition: description.toLowerCase(),
@@ -42,7 +48,7 @@ export default class Meal {
   }
 
 
-  // Get all political party
+  // Get all meals
 
   /**
    *
@@ -52,8 +58,8 @@ export default class Meal {
   static getAllMeal(req, res) {
     getAllMeals(res, mealDb);
   }
-  
-   // Update meal option
+
+  // Update meal option
 
   /**
    *
@@ -86,7 +92,7 @@ export default class Meal {
   }
 
 
-    /**
+  /**
    * deletemeal()
    * @desc deletes a meal
    * @param {*} req
@@ -98,9 +104,9 @@ export default class Meal {
       if (mealDb[i].id === parseInt(req.params.id, 10)) {
         mealDb.splice(i, 1);
         return res.status(200).json({
-          status:200,
+          status: 200,
           message: 'seleted meal successfully deleted'
-          });
+        });
       }
     }
     return res.status(404).send('404, meal not found');
