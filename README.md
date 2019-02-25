@@ -1,4 +1,5 @@
- [![Coverage Status](https://coveralls.io/repos/github/olorunwalawrence/book-a-meal/badge.svg?branch=develop)](https://coveralls.io/github/olorunwalawrence/book-a-meal?branch=develop)  [![Maintainability](https://api.codeclimate.com/v1/badges/58dd494b4abf4b899da1/maintainability)](https://codeclimate.com/github/olorunwalawrence/book-a-meal/maintainability)
+[![Build Status](https://travis-ci.org/olorunwalawrence/book-a-meal.svg?branch=develop)](https://travis-ci.org/olorunwalawrence/book-a-meal)
+(https://api.codeclimate.com/v1/badges/58dd494b4abf4b899da1/maintainability)](https://codeclimate.com/github/olorunwalawrence/book-a-meal/maintainability)
 
 # book-a-meal
 
