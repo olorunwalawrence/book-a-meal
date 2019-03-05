@@ -1,87 +1,91 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable quotes */
-/* eslint-disable no-undef */
-/* eslint-disable no-const-assign */
-/* eslint-disable require-jsdoc */
-import { Op } from 'sequelize';
-import models from '../models';
-import errors from '../error/error.json';
-import isCaterer from '../helpers/role';
+import moment from 'moment';
+import {
+  Menu,
+  Meal
+} from '../models';
 
-const { Menu, User } = models;
 /**
- * @exports
- * @class MealController
+ * class Menu controls all menu methods
+ * @class Menu
  */
-export default class MenuControllers {
+export default class menuController {
   /**
-   * Creates a new meal item
-   * @method createMeal
-   * @memberof MealController
-   * @param {object} req
-   * @param {object} res
-   * @returns {(function|object)} Function next() or JSON object
-   * date is either equal to today or given date
+   * POST a new menu
+   * @param {any} req
+   * @param {any} res
+   * @returns {json} adds new menu
+   * @memberof Menu
    */
-  // only admin should be able to perform al this functionality
-  static createMenu(req, res) {
-    const { userId, role } = req.decoded;
-
+  static addMenu(req, res) {
     const {
-      title, imageUrl, price, description,
-    
+      menuName,
+      mealId,
+      date
     } = req.body;
-
-    Menu.findOrCreate({
-      where: { title: { [Op.iLike]: title }, userId },
-
-      defaults: {
-        title,
-        imageUrl,
-        description,
-        price,
-        userId
-      },
-
-      include: [{
-        model: User, as: 'caterer'
-      }]
-
-
-    }).spread((newMeal, created) => {
-      isCaterer(role, res);
-
-      if (!created) {
-        return res.status(409).json({
-          status: 409,
-          message: 'menu title already exist'
-        });
+    Menu.findOne({
+      where: {
+        date: moment()
       }
-
-      return res.status(201).json({
-        status: 201,
-        message: 'menu successfully created',
-        newMeal
+    })
+      .then((menu) => {
+        if (menu) {
+          return res.status(409).json({
+            error: 'menu for the day already exists'
+          });
+        }
+        Meal.findAll({
+          attributes: ['id']
+        })
+          .then((meals) => {
+            if (!meals) {
+              return res.status(404).json({ error: 'No meal was found' });
+            }
+            // const foundMeal = meals.map(meal => meal.id);
+            // const mealNotFound = req.body.mealId
+            //   .filter(id => foundMeal.indexOf(parseInt(id, 10)) === -1);
+            // if (mealNotFound.length >= 1) {
+            //   return res.status(404).json({
+            //     message: 'Cannot set menu, These meals Ids were not found',
+            //     meals: mealNotFound.join(',')
+            //   });
+            // }
+            Menu.create({
+              menuName,
+              date,
+              userId: req.user.id
+            }).then((newMenu) => {
+              newMenu.setMeals(mealId);
+              res.status(201).json({
+                status: true,
+                message: 'menu added successfully',
+              });
+            })
+              .catch(error => res.status(500).json({
+                status: 'error',
+                message: 'internal server error',
+                error
+              }));
+          });
       });
-    }).catch((err) => {
-      console.log(err.message);
-    });
   }
 
-  static getAllMenu(req, res) {
-    Menu.findAll({
-
-    }).then((menus) => {
-      const { role } = req.decoded;
-      isCaterer(role, res);
-
-      res.status(200).json({
-        status: 200,
-        message: 'All menu retrieved successfully',
-        data: menus
-      });
-    }).catch((err) => {
-      console.log(err.message);
-    });
+  /**
+   * GET menu menu
+   * @param {any} req
+   * @param {any} res
+   * @returns {json} gets menu
+   * @memberof Menu
+  */
+  static getMenu(req, res) {
+    return Menu.findAll()
+      .then(foundMenu => res.status(200).json({
+        status: true,
+        meal: foundMenu
+      }))
+      .catch(error => res.status(500).json({
+        status: 'error',
+        message: 'internal server error',
+        error
+      }));
   }
 }

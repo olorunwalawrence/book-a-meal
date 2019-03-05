@@ -1,48 +1,12 @@
-import Sequelize from 'sequelize';
-
-export default (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
-    mealId: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false
-    },
-    title: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    imageUrl: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-      defaultValue: 'default-img.jpg'
-    },
-    description: {
-      type: Sequelize.TEXT,
-      allowNull: true
-    },
-    price: {
-      type: Sequelize.DECIMAL(10, 2),
-      allowNull: false
-    },
-    userId: {
-      type: Sequelize.UUID,
-      onDelete: 'CASCADE',
-      allowNull: true,
-      references: {
-        model: 'User',
-        key: 'userId',
-        as: 'userId'
-      }
-    }
-  }, { paranoid: true });
+    quantity: { type: DataTypes.INTEGER, allowNull: false },
+    amount: { type: DataTypes.STRING, allowNull: false },
+  });
   Order.associate = (models) => {
-    Order.belongsTo(models.User, {
-      as: 'customer',
-      foreignKey: 'userId',
-      onDelete: 'CASCADE',
-    });
+    // associations defined here
+    Order.belongsTo(models.Meal, { foreignKey: 'mealId' });
+    Order.belongsTo(models.User, { foreignKey: 'userId' });
   };
-
   return Order;
 };
