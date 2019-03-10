@@ -1,58 +1,31 @@
-import Sequelize from 'sequelize';
-
-export default (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Meal = sequelize.define('Meal', {
-    mealId: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false
-    },
-    title: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    imageUrl: {
-      type: Sequelize.TEXT,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'default-img.jpg'
+      unique: true
     },
     description: {
-      type: Sequelize.TEXT,
-      allowNull: true
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     price: {
-      type: Sequelize.DECIMAL(10, 2),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    userId: {
-      type: Sequelize.UUID,
-      onDelete: 'CASCADE',
-      allowNull: true,
-      references: {
-        model: 'User',
-        key: 'userId',
-        as: 'userId'
-      }
-    }
-  }, { paranoid: true });
+    imageurl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
   Meal.associate = (models) => {
-    Meal.belongsTo(models.User, {
-      as: 'caterer',
-      foreignKey: 'userId',
-      onDelete: 'CASCADE',
-    });
-
     Meal.belongsToMany(models.Menu, {
-      through: models.MenuMeal,
-      foreignKey: 'mealId',
-    });
-
-    Meal.belongsToMany(models.Order, {
-      through: models.OrderItem,
-      foreignKey: 'mealId',
+      through: 'MealMenu',
+      foreignKey: 'MealId',
+      otherKey: 'MenuId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
   };
-
   return Meal;
 };

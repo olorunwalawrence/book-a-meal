@@ -3,57 +3,55 @@ module.exports = {
     id: {
       allowNull: false,
       autoIncrement: true,
-      type: Sequelize.INTEGER
-    },
-    mealId: {
-      type: Sequelize.UUID,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false
+      type: Sequelize.INTEGER,
+    },
+    date: {
+      type: Sequelize.DATEONLY,
+      allowNull: false,
+    },
+    amount: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    quantity: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     },
     userId: {
-      type: Sequelize.UUID,
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId',
+      },
+    },
+    mealId: {
+      type: Sequelize.INTEGER,
       onDelete: 'CASCADE',
       allowNull: true,
       references: {
-        model: 'Users',
-        key: 'userId',
-        as: 'userId'
-      }
+        model: 'Meals',
+        key: 'id',
+        as: 'mealId',
+      },
     },
-    title: {
-      type: Sequelize.STRING,
-      allowNull: {
-        args: false,
-        msg: 'This is a required field'
-      }
-    },
-    imageUrl: {
-      type: Sequelize.TEXT,
+    status: {
+      type: Sequelize.ENUM('delivered', 'cancelled', 'pending'),
       allowNull: false,
-      defaultValue: 'http://res.cloudinary.com/iverenshaguy/image/upload/v1532540264/bookameal/default-img.jpg'
-    },
-    description: {
-      type: Sequelize.TEXT,
-      allowNull: true
-    },
-
-    price: {
-      type: Sequelize.DECIMAL(10, 2),
-      allowNull: false
+      defaultValue: 'pending',
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
-    deletedAt: {
-      allowNull: true,
-      type: Sequelize.DATE
-    }
   }),
-  down: queryInterface => queryInterface.dropTable('Orders')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Orders'),
 };

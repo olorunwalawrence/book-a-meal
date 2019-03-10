@@ -3,68 +3,41 @@ module.exports = {
     id: {
       allowNull: false,
       autoIncrement: true,
-      type: Sequelize.INTEGER
-    },
-    userId: {
-      type: Sequelize.UUID,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false
+      type: Sequelize.INTEGER,
     },
     firstname: {
       type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: null
+      allowNull: false,
     },
     lastname: {
       type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: null
+      allowNull: false,
+    },
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
-    },
-    role: {
-      type: Sequelize.ENUM('caterer', 'customer', 'admin'),
-      allowNull: false
-    },
-    businessName: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: null
-    },
-    address: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: null
-    },
-    phoneNo: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: null
-    },
-    passwordResetToken: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-    passwordTokenExpiry: {
-      type: Sequelize.BIGINT,
-      allowNull: true
+      allowNull: false,
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
-    }
+      type: Sequelize.DATE,
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
+  down: queryInterface => queryInterface.dropTable('Users'),
 };
