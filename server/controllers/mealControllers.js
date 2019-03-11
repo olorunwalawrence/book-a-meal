@@ -1,21 +1,22 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quotes */
 /* eslint-disable no-undef */
 /* eslint-disable no-const-assign */
 /* eslint-disable require-jsdoc */
-import { Op } from 'sequelize';
-import models from '../models';
-import errors from '../error/error.json';
-import catererRoleValidator from '../helpers/role';
 
-const { Meal, User } = models;
+import models from '../models';
+import catererRoleValidator from "../middlewares/role";
+
+const { Meal } = models;
+
 /**
  * @exports
  * @class MealController
  */
 export default class MealControllers {
   /**
-   * Creates a new meal item
+
    * @method createMeal
    * @memberof MealController
    * @param {object} req
@@ -23,89 +24,103 @@ export default class MealControllers {
    * @returns {(function|object)} Function next() or JSON object
    * date is either equal to today or given date
    */
-  // only admin should be able to perform al this functionality
-  static createMeal(req, res) {
-    const { userId, role } = req.decoded;
+  static createMeal(req, res, next) {
+    const { name, description, imageurl } = req.body;
+    const { role } = req.decoded;
+    let { price } = req.body;
+    price = Number(price);
 
-    const {
-      title, imageUrl, price, description
-    } = req.body;
-
-
-    Meal.findOrCreate({
-      where: { title: { [Op.iLike]: title }, userId },
-
-      defaults: {
-        title: title.trim().toLowerCase(),
-        imageUrl,
-        description: description.trim().toLowerCase(),
-        price,
-        userId
-      },
-
-      include: [{
-        model: User, as: 'caterer'
-      }]
-
-
-    }).spread((newMeal, created) => {
-      catererRoleValidator(role, res);
-
-      if (!created) {
-        return res.status(409).json({
-          status: 409,
-          message: 'meal title already exist'
-        });
-      }
-
-      return res.status(201).json({
-        status: 201,
-        message: 'meal successfully created',
-        newMeal
-      });
-    }).catch((err) => {
-      console.log(err.message);
-    });
+    catererRoleValidator.isCaterer(role, res);
+  
+    Meal.findOne({ where: { name } })
+      .then((meal) => {
+        if (meal) {
+          return res.status(409).send({
+            message: 'Meal already exist',
+          });
+        }
+        Meal.create({
+          name,
+          description,
+          price,
+          imageurl,
+        })
+          .then((newMeal) =>{
+  
+            // function to check if the this user is a caterer or not
+            catererRoleValidator.isCaterer(role, res);
+            res.status(201).json({
+            
+              message: 'Successfully added a new meal',
+              meal: newMeal,
+            })
+          })
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
   }
+
 
   static getAllmeal(req, res) {
-    Meal.findAll({
+    const limit = req.query.limit || 5;
+    const page = req.query.page || 1;
+    const offset = limit * (page - 1);
+    Meal.findAndCountAll({
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']],
+    })
+      .then((meals) => {
+        const { role } = req.decoded;
+        // function to check if the this user is a caterer or not
+        catererRoleValidator.isCaterer(role, res);
+       
 
-    }).then((meals) => {
-      const { role } = req.decoded;
-      // isCaterer(role, res);
-
-      res.status(200).json({
-        status: 200,
-        message: 'meal retrieved successfully',
-        data: meals
+        if (meals.count === 0) {
+          return res.status(404).send({
+            message: 'No meals found',
+            meals: meals.rows,
+          });
+        }
+        const pages = Math.ceil(meals.count / limit);
+        return res.status(200).send({
+          message: 'Meals successfully retrieved',
+          meals,
+          pages,
+          count: meals.count,
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
-    }).catch((err) => {
-      console.log(err.message);
-    });
   }
 
-  static mealUpdate(req, res) {
+  static mealUpdate(req, res, next) {
     const id = Number(req.params.id);
+    delete req.body.id;
+    const body = req.body;
+
     Meal.findById(id)
       .then((meal) => {
         if (!meal) {
-          return res.status(404).json({
-            status: 404,
-            message: 'meal with the given id was not Found',
+          return res.status(422).send({
+            message: 'Meal does not exist',
           });
         }
-        return Meal
-          .update({
-            title: req.body.tile,
-            imageUrl: req.body.size,
-            price: req.body.price,
-            description: req.body.description
-          }).then(meal => res.status(200).json({
-            status: 201,
-            data: meal,
-          }));
-      });
+        meal.update(body)
+          .then((updatedMeal) => {
+            const { role } = req.decoded;
+            // function to check if the this user is a caterer or not
+            catererRoleValidator.isCaterer(role, res);
+
+            res.status(200).send({
+              message: 'Successfully updated meal',
+              updatedMeal,
+            });
+          })
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
   }
 
   /**
@@ -115,21 +130,35 @@ export default class MealControllers {
    * @param {object} req
    * @param {object} res
    * @returns {(function|object)} Function next() or JSON object
+   *
+   *
    */
-  static deleteMeal(req, res) {
-    const { userId, role } = req.decoded;
-    const { params: { mealId } } = req;
-    Meal.destroy({
-      where: { mealId, userId }
 
-    }).then((mealItem) => {
-      isCaterer(role, res);
-      if (!mealItem) {
-        res.status(404).json({ error: errors[404] });
-      }
-      res.status(200).json({ message: 'Meal deleted successfully' });
-    }).catch((err) => {
-      res.status(500).send(err.message);
-    });
+  static deleteMeal(req, res, next) {
+    const mealId = Number(req.params.id);
+    Meal.findById(mealId)
+      .then((meal) => {
+        if (!meal) {
+          return res.status(404).send({
+            message: 'Meal cannot be found',
+          });
+        }
+        Meal.destroy({ where: { id: mealId } })
+      
+          .then(() => {
+            const { role } = req.decoded;
+            // function to check if the this user is a caterer or not
+            catererRoleValidator.isCaterer(role, res);
+
+            return res.status(200).send({
+            
+              message: 'Successfully deleted meal',
+            });
+          }
+         )
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
   }
+
 }

@@ -1,14 +1,13 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable quotes */
-/* eslint-disable no-undef */
-/* eslint-disable no-const-assign */
+
 /* eslint-disable require-jsdoc */
+import moment from 'moment';
 import { Op } from 'sequelize';
 import models from '../models';
-import errors from '../error/error.json';
-import isCaterer from '../helpers/role';
 
-const { Menu, User } = models;
+import isCaterer from '../middlewares/role';
+
+
+const { Menu, Meal } = models;
 /**
  * @exports
  * @class MealController
@@ -24,64 +23,123 @@ export default class MenuControllers {
    * date is either equal to today or given date
    */
   // only admin should be able to perform al this functionality
-  static createMenu(req, res) {
-    const { userId, role } = req.decoded;
+  static createMenu(req, res, next) {
+  
+    const { date , mealIds } = req.body;
 
-    const {
-      title, imageUrl, price, description,
-    
-    } = req.body;
-
-    Menu.findOrCreate({
-      where: { title: { [Op.iLike]: title }, userId },
-
-      defaults: {
-        title,
-        imageUrl,
-        description,
-        price,
-        userId
-      },
-
-      include: [{
-        model: User, as: 'caterer'
-      }]
-
-
-    }).spread((newMeal, created) => {
-      isCaterer(role, res);
-
-      if (!created) {
-        return res.status(409).json({
-          status: 409,
-          message: 'menu title already exist'
-        });
-      }
-
-      return res.status(201).json({
-        status: 201,
-        message: 'menu successfully created',
-        newMeal
-      });
-    }).catch((err) => {
-      console.log(err.message);
-    });
+    Menu.findOne({ where: { date } })
+      .then((menu) => {
+        if (menu) {
+          return res.status(400).send({
+            message: `Menu for ${moment(date).format('dddd, MMMM Do YYYY')} already exists`,
+          });
+        }
+        Menu.create({ date })
+          .then(newMenu => newMenu.addMeals(mealIds)
+            .then(() => {
+              Menu.findById(newMenu.id, {
+                where: { date },
+                include: [{
+                  model: Meal,
+                  attributes: ['id', 'name', 'price', 'description', 'imageurl'],
+                }],
+              })
+                .then((createdMenu) => {
+                  if (!createdMenu) {
+                    return res.status(404).send({ message: 'Menu was not found' });
+                  }
+                  res.status(201).send({
+                    message: `Successfully created a menu for ${moment(date).format('dddd, MMMM Do YYYY')}`,
+                    menu: createdMenu,
+                  });
+                })
+                .catch(error => next(error));
+            })
+            .catch(error => next(error)))
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
   }
 
-  static getAllMenu(req, res) {
-    Menu.findAll({
+    /**
+   * Get menu for a particular day
+   *
+   * @static
+   *
+   * @param {Object} - express http request object
+   * @param {Object} - express http response object
+   * @param {Function} - calls the next middleware
+   *
+   * @return {Object} - express http response object
+   *
+   * @memberof MenuController
+   */
 
-    }).then((menus) => {
-      const { role } = req.decoded;
-      isCaterer(role, res);
+  static getAllMenu(req, res, next) {
+    const todaysdate = new Date().toISOString();
+    const date = req.query.date || todaysdate.substr(0, 10);
+    Menu.findOne({
+      where: { date },
+      include: [{
+        model: Meal,
+        attributes: ['id', 'name', 'price', 'description', 'imageurl'],
+      }],
+    }).then((menu) => {
+      if (!menu) {
+        return res.status(404).send({
+           message: `Menu has not been set for ${moment(date).format('dddd, MMMM Do YYYY')}` });
+      }
+      res.status(200).json({ menu });
+    }).catch(error => next(error));
+  }
 
-      res.status(200).json({
-        status: 200,
-        message: 'All menu retrieved successfully',
-        data: menus
-      });
-    }).catch((err) => {
-      console.log(err.message);
-    });
+  static UpdateMenu(req, res, next) {
+    /**
+   * @description - Updates menu for a particular day
+   *
+   * @static
+   *
+   * @param {Object} - express http request object
+   * @param {Object} - express http response object
+   * @param {Function} - calls the next middleware
+   *
+   * @return {Object} - express http response object
+   *
+   * @memberof MenuController
+   */
+    const menuId = req.params.id;
+    const { mealIds } = req.body;
+
+
+    Menu.findById(menuId)
+      .then((menu) => {
+        if (!menu) {
+          return res.status(400).send({
+            message: 'No menu found ',
+          });
+        }
+
+        menu.setMeals(mealIds)
+          .then(() => {
+            Menu.findById(menu.id, {
+              include: [{
+                model: Meal,
+                attributes: ['id', 'name', 'price', 'description', 'imageurl'],
+              }],
+            })
+              .then((updatedMenu) => {
+                if (!updatedMenu) {
+                  return res.status(404).send({ message: 'Menu was not found' });
+                }
+                res.status(200).send({
+                  message: `Successfully updated menu for ${moment(updatedMenu.date).format('dddd, MMMM Do YYYY')}`,
+                  menu: updatedMenu,
+                });
+              })
+              .catch(error => next(error));
+          })
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
   }
 }

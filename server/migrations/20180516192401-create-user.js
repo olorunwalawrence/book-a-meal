@@ -22,9 +22,9 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    isAdmin: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
+    role: {
+      type: Sequelize.ENUM('caterer', 'customer'),
+      allowNull: false
     },
     password: {
       type: Sequelize.STRING,

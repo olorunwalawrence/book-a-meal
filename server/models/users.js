@@ -20,9 +20,9 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    role: {
+      type: DataTypes.ENUM('caterer', 'customer'),
+      allowNull: false
     },
     password: {
       allowNull: false,
