@@ -83,7 +83,7 @@ Open the postman and test the following existing routes:
         <td>make new order</td>
     </tr>
     <tr>
-        <td>/api/v1/meal/:meal id</td>
+        <td>/api/v1/meals/:meal id</td>
         <td>PUT</td>
         <td>Update a meal</td>
     </tr>
@@ -93,12 +93,12 @@ Open the postman and test the following existing routes:
         <td>Update an order</td>
     </tr>
     <tr>
-        <td>/api/v1/meal/:meal id</td>
+        <td>/api/v1/meals/:meal id</td>
         <td>DELETE</td>
         <td>Remove a meal</td>
     </tr>
     <tr>
-        <td>/api/v1/meal</td>
+        <td>/api/v1/meals</td>
         <td>GET</td>
         <td>Find all meal </td>
     </tr>
