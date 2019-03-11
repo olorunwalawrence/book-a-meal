@@ -9,67 +9,57 @@ export default class EmptyField {
       firstname,
       lastname,
       password,
-      businessName,
+     username,
       email,
-      phoneNo,
-      address
     } = body;
-    if (role === '') {
+    if (role.trim() === '') {
       return res.status(404).json({
         messgae: 'role cannot be empty'
       });
     }
 
-    if (firstname === '') {
+    if (firstname.trim() === '') {
       return res.status(404).json({
         messgae: 'first name cannot be empty'
       });
     }
-    if (lastname === '') {
+    if (lastname.trim() === '') {
       return res.status(404).json({
         messgae: 'last name cannot be empty'
       });
     }
-    if (password === '') {
+    if (password.trim() === '') {
       return res.status(404).json({
         messgae: 'password cannot be empty'
       });
     }
-    if (phoneNo === '') {
-      return res.status(404).json({
-        messgae: 'phnone number cannot be empty'
-      });
-    }
-    if (businessName === '') {
+
+    if (username.trim() === '') {
       return res.status(404).json({
         messgae: 'business name cannot be empty'
       });
     }
-    if (email === '') {
+    if (email.trim() === '') {
       return res.status(404).json({
         messgae: 'email cannot be empty'
       });
     }
-    if (address === '') {
-      return res.status(404).json({
-        messgae: 'address cannot be empty'
-      });
-    }
+
     next();
   }
 
   static checkFoodEmptyfield(req, res, next) {
     const {
-      title, imageUrl, price, description,
+      name, imageurl, price, description,
 
     } = req.body;
 
-    if (title === '') {
+    if (name === '') {
       return res.status(404).json({
         messgae: 'title field cannot be empty'
       });
     }
-    if (imageUrl === '') {
+    if (imageurl === '') {
       return res.status(404).json({
         messgae: 'image Url field name cannot be empty'
       });
@@ -89,15 +79,20 @@ export default class EmptyField {
   }
 
   static checkLoginEmptyField(req, res, next) {
-    const { email, password } = req.body;
-    if (password === '') {
+    const { email, password, role } = req.body;
+    if (password.trim() === '') {
       return res.status(404).json({
         messgae: 'password cannot be empty'
       });
     }
-    if (email === '') {
+    if (email.trim() === '') {
       return res.status(404).json({
         messgae: 'email cannot be empty'
+      });
+    }
+    if (role.trim() === '') {
+      return res.status(404).json({
+        messgae: 'role cannot be empty'
       });
     }
     next();
