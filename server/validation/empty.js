@@ -97,4 +97,20 @@ export default class EmptyField {
     }
     next();
   }
+
+  static checkMenuEmptyField(req, res, next) {
+    const { date, mealIds } = req.body;
+    if (date.trim() === '') {
+      return res.status(404).json({
+        messgae: 'date field cannot be empty'
+      });
+    }
+    if (mealIds.trim() === '') {
+      return res.status(404).json({
+        messgae: 'email cannot be empty'
+      });
+    }
+   
+    next();
+  }
 }
