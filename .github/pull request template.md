@@ -13,5 +13,3 @@ create express setup
     
 
 #### What is the story identity?
-
-#161847860
