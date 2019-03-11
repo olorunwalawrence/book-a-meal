@@ -1,5 +1,5 @@
 import express from 'express';
-import UserControllers from '../controllers/userController/userController';
+import UserControllers from '../controllers/userController';
 import mealController from '../controllers/mealControllers';
 import menuControlles from '../controllers/menuController';
 import orderController from '../controllers/orderscontroller';
@@ -7,31 +7,36 @@ import verifyUser from '../middlewares/jwtAuth';
 import authValidation from '../validation/formValidator';
 import mealValidator from '../validation/mealValidator';
 import emptyField from '../validation/empty';
+import RoleValidator from '../middlewares/role';
+import validateinput from '../middlewares/validateinput';
 
+const {isCaterer, isUser} = RoleValidator;
 const authRouter = express.Router();
-const { validateField } = authValidation;
+const { validateField, validateLoginField } = authValidation;
 const { registerUser, loginUser } = UserControllers;
 const {
   createMeal, getAllmeal, mealUpdate, deleteMeal 
 } = mealController;
-const { createMenu, getAllMenu } = menuControlles;
+const { createMenu, getAllMenu, UpdateMenu } = menuControlles;
 const { createOrder, getAllOrder, orderUpdate } = orderController;
 const { validateFields } = mealValidator;
 const { UserEmptyField, checkFoodEmptyfield, checkLoginEmptyField } = emptyField;
 
-authRouter.post('/auth/signup', UserEmptyField, validateField, registerUser);
-authRouter.post('/auth/login', checkLoginEmptyField, verifyUser, loginUser);
+authRouter.post('/auth/signup',validateField,UserEmptyField , registerUser);
+authRouter.post('/auth/login',checkLoginEmptyField , validateLoginField,loginUser);
 
-authRouter.post('/meals', checkFoodEmptyfield, validateFields, verifyUser, createMeal);
-authRouter.put('/meals/:id', checkFoodEmptyfield, validateFields, mealUpdate);
+authRouter.post('/meals', verifyUser, createMeal);
+authRouter.get('/meals', verifyUser,getAllmeal);
+authRouter.put('/meals/:id',verifyUser, mealUpdate);
 authRouter.delete('/meals/:id', verifyUser, deleteMeal);
 
-authRouter.post('/menu', checkFoodEmptyfield, validateFields, verifyUser, createMenu);
+authRouter.post('/menu', verifyUser, createMenu);
 authRouter.get('/menu', verifyUser, getAllMenu);
-authRouter.get('/meals', verifyUser, getAllmeal);
+authRouter.put('/menu/:id', validateFields, UpdateMenu)
 
-authRouter.post('/orders', checkFoodEmptyfield, validateFields, verifyUser, createOrder);
+
+authRouter.post('/orders', verifyUser, createOrder);
 authRouter.get('/orders', verifyUser, getAllOrder);
-// authRouter.put('/orders/:mealId', checkFoodEmptyfield, validateFields, verifyUser, orderUpdate);
+authRouter.put('/orders/:id', verifyUser, orderUpdate);
 
 export default authRouter;

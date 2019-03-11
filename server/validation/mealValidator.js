@@ -4,16 +4,16 @@
 export default class Validator {
   static validateFields(req, res, next) {
     const {
-      title,
-      imageUrl,
+      name,
+      imageurl,
       description,
       price
     } = req.body;
     try {
-      if (!title) {
-        return res.status(422).json({ message: 'title field is not specified ' });
+      if (!name) {
+        return res.status(422).json({ message: 'name field is not specified ' });
       }
-      if (!imageUrl) {
+      if (!imageurl) {
         return res.status(422).json({ message: 'image field is not specified ' });
       }
       if (!description) {

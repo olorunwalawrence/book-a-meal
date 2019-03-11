@@ -1,89 +1,41 @@
-import bcrypt from 'bcrypt';
-
-const SALT_ROUNDS = 10;
+import { hashPassword } from '../helpers/helpers';
 
 export default (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
-    {
-      userId: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false
-      },
-      firstname: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
-      },
-      lastname: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      role: {
-        type: DataTypes.ENUM('caterer', 'customer', 'admin'),
-        allowNull: false
-      },
-      businessName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
-      },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
-      },
-      phoneNo: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
-      },
-   
+  const User = sequelize.define('User', {
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
-      hooks: {
-        beforeCreate: user => User.hashPassword(user),
-        beforeUpdate: user => User.hashPassword(user)
-      }
-    }
-  );
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    username: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    role: {
+      type: DataTypes.ENUM('caterer', 'customer'),
+      allowNull: false
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+  });
+
+  User.beforeCreate(user => hashPassword(user), { individualHooks: true });
+
   User.associate = (models) => {
-    User.hasMany(models.Meal, {
-      foreignKey: 'userId',
-      as: 'meal'
-    });
-
-    User.hasMany(models.Menu, {
-      foreignKey: 'userId',
-      as: 'menu'
-    });
-
     User.hasMany(models.Order, {
       foreignKey: 'userId',
-      as: 'orders'
     });
-
-    User.hasMany(models.Notification, {
-      foreignKey: 'userId',
-      as: 'notifications'
-    });
-  };
-
-  User.hashPassword = async (user) => {
-    const hash = await bcrypt.hash(user.password, SALT_ROUNDS);
-    return user.setDataValue('password', hash);
   };
 
   return User;
