@@ -69,7 +69,7 @@ class UserController {
           });
         })
         .catch((error) => {
-    
+      console.log(error);
           res.status(422).json({
             error: 422,
             message: `${role} is an invalid input and also check the specified fields`
