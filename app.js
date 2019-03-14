@@ -3,8 +3,6 @@ import bodyParser from 'body-parser';
 // import route from './dummy/route';
 import apiRoute from './server/routes/authRoutes';
 
-require('babel-core/register');
-require('babel-polyfill');
 
 const app = express();
 

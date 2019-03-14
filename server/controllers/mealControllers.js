@@ -31,7 +31,7 @@ export default class MealControllers {
     price = Number(price);
 
     catererRoleValidator.isCaterer(role, res);
-  
+
     Meal.findOne({ where: { name } })
       .then((meal) => {
         if (meal) {
@@ -45,15 +45,14 @@ export default class MealControllers {
           price,
           imageurl,
         })
-          .then((newMeal) =>{
-  
+          .then((newMeal) => {
             // function to check if the this user is a caterer or not
             catererRoleValidator.isCaterer(role, res);
             res.status(201).json({
-            
+
               message: 'Successfully added a new meal',
               meal: newMeal,
-            })
+            });
           })
           .catch(error => next(error));
       })
@@ -74,7 +73,7 @@ export default class MealControllers {
         const { role } = req.decoded;
         // function to check if the this user is a caterer or not
         catererRoleValidator.isCaterer(role, res);
-       
+
 
         if (meals.count === 0) {
           return res.status(404).send({
@@ -144,21 +143,19 @@ export default class MealControllers {
           });
         }
         Meal.destroy({ where: { id: mealId } })
-      
+
           .then(() => {
             const { role } = req.decoded;
             // function to check if the this user is a caterer or not
             catererRoleValidator.isCaterer(role, res);
 
             return res.status(200).send({
-            
+
               message: 'Successfully deleted meal',
             });
-          }
-         )
+          })
           .catch(error => next(error));
       })
       .catch(error => next(error));
   }
-
 }
