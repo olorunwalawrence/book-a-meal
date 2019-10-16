@@ -71,8 +71,46 @@ You can run `npm run start:dev` in development to use [Nodemon](https://nodemon.
 * After installing as shown above
 * Navigate to [http://localhost:9000/api/v1](http://localhost:9000/api/v1) in
   [Postman](https://getpostman.com/) to access the application
-* Use the [API Documentation](below) to access the endpoints available
+* Use the [API Documentation]  below to access the endpoints available
 
+
+## Limitations
+
+* Application is not integrated with a payment platform
+* Application is not real time
+* Orders cannot be filtered by status or date
+
+
+## Contributing Guide
+
+* Fork the repository
+* Make your contributions
+* Write Test Cases for your contribution with at least **80%** coverage
+* Create a pull request against the develop branch
+
+## FAQs
+
+* What language is used to build this application?
+
+  * The application (backend) is entirely built with Javascript
+
+* Is this an open-source project?
+
+  * Yes, this is an open-source project.
+
+* Who can contribute ?
+
+  * Anyone can contribute as long as you follow the contribution guide outlined above
+
+* Is the application licensed ?
+
+  * Yes, the application is licensed under the [MIT license](https://github.com/olorunwalawrence/book-a-meal/blob/develop/LICENSE)
+
+## License
+
+&copy; Olorunwa lawrence
+
+Licensed under the [MIT License](https://github.com/olorunwalawrence/book-a-meal/blob/develop/LICENSE)
 
 Open the postman and test the following existing routes:
 <table>
