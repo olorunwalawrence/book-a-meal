@@ -137,7 +137,9 @@ REQUEST BODY
 
 ## GET ALL MEAL
 * Get all meals that beong to the Caterer. Only the caterers can interact with this endpoint
-
+ REQUEST BODY 
+ *  name, description, price,imageurl,
+ 
  HTTP Request
 * Endpoint: /meals
 * Verb: GET
@@ -147,6 +149,51 @@ REQUEST BODY
 * Status Code: 200
 * Body: (application/json)
 
+
+## Add a Meal Option
+
+HTTP Request
+* Endpoint: /meals
+* Verb: POST
+* Body: (application/json)
+
+## Modify an Existing Meal Option
+REQUEST BODY
+* description
+
+HTTP Request
+*Endpoint: /meals/
+*Verb: PUT
+*Body: (application/json)
+
+
+## Delete an Existing Meal
+
+HTTP Request
+*Endpoint: /meals/
+*Verb: DELETE
+
+## Get Menu Per Day
+HTTP Request
+*Endpoint: /menu/
+*Verb: GET
+
+## Create a Menu
+REQUEST BODY
+* date
+
+HTTP Request
+*Endpoint: /menu/
+*Verb: POST
+*Body: (application/json)
+## Modifies an existing menu belonging to caterer.
+URL Parameters
+The ID of the menu to be modified
+
+HTTP Request
+*Endpoint: /menu/
+*Verb: PUT
+(Body: (application/json)
 Open the postman and test the following existing routes:
 
 <table>
