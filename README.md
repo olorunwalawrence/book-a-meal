@@ -137,8 +137,7 @@ REQUEST BODY
 
 ## GET ALL MEAL
 * Get all meals that beong to the Caterer. Only the caterers can interact with this endpoint
- REQUEST BODY 
- *  name, description, price,imageurl,
+
  
  HTTP Request
 * Endpoint: /meals
@@ -151,7 +150,8 @@ REQUEST BODY
 
 
 ## Add a Meal Option
-
+ REQUEST BODY 
+ *  name, description, price,imageurl,
 HTTP Request
 * Endpoint: /meals
 * Verb: POST
@@ -162,38 +162,57 @@ REQUEST BODY
 * description
 
 HTTP Request
-*Endpoint: /meals/
-*Verb: PUT
-*Body: (application/json)
+* Endpoint: /meals/
+* Verb: PUT
+* Body: (application/json)
 
 
 ## Delete an Existing Meal
 
 HTTP Request
-*Endpoint: /meals/
-*Verb: DELETE
+* Endpoint: /meals/
+* Verb: DELETE
 
 ## Get Menu Per Day
 HTTP Request
-*Endpoint: /menu/
-*Verb: GET
+* Endpoint: /menu/
+* Verb: GET
 
 ## Create a Menu
 REQUEST BODY
 * date
 
 HTTP Request
-*Endpoint: /menu/
-*Verb: POST
-*Body: (application/json)
+* Endpoint: /menu/
+* Verb: POST
+* Body: (application/json)
 ## Modifies an existing menu belonging to caterer.
 URL Parameters
 The ID of the menu to be modified
 
 HTTP Request
-*Endpoint: /menu/
-*Verb: PUT
+* Endpoint: /menu/
+* Verb: PUT
 (Body: (application/json)
+
+## Get All Orders
+
+* Returns all Customer/Caterer's Orders in the App. Also returns the sum of pending orders for the caterers/customers and the total cash earned per day for the caterer or customer
+
+HTTP Request
+* Endpoint: /orders/
+* Verb: GET
+
+## Create an Order
+  REQUEST BODY
+* mealId,quantity
+
+
+HTTP Request
+* Endpoint: /orders/
+* Verb: POST
+
+
 Open the postman and test the following existing routes:
 
 <table>
