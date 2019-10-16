@@ -138,7 +138,7 @@ REQUEST BODY CUSTOMER
 }
 
 REQUEST BODY CATERER
-{
+* [{
   "role": "caterer",
   "businessName": "Food Circle",
   "email": "food@circle.com",
@@ -146,7 +146,7 @@ REQUEST BODY CATERER
   "passwordConfirm": "foodcircle",
   "phoneNo": "08166557788",
   "address": "$, Herbert Macaulay Way, Yaba, Lagos"
-}
+}]
 Open the postman and test the following existing routes:
 <table>
     <tr>
