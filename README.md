@@ -112,6 +112,41 @@ You can run `npm run start:dev` in development to use [Nodemon](https://nodemon.
 
 Licensed under the [MIT License](https://github.com/olorunwalawrence/book-a-meal/blob/develop/LICENSE)
 
+
+## AUTHENTICATION
+
+
+* An authorization token is required to access all protected endpoints. Only the Login and Signup endpoints do not require an authorization token. The Login and Signup endpoints are used to generate Authorization Tokens.
+
+* Authorization tokens expire after 48 hours after they are generated.
+
+* BookAMeal expects a token to be included in all protected API requests to the server in a header that looks like the following:
+
+* You must replace averylong.jsonwebtoken.requiredforauthentication with your personal Authorization Token.
+
+## Signup
+
+REQUEST BODY CUSTOMER
+
+{
+  "role": "customer",
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john@doe.com",
+  "address": "$, Herbert Macaulay Way, Yaba, Lagos",
+  "password": "emiolaolasanmi",
+}
+
+REQUEST BODY CATERER
+{
+  "role": "caterer",
+  "businessName": "Food Circle",
+  "email": "food@circle.com",
+  "password": "foodcircle",
+  "passwordConfirm": "foodcircle",
+  "phoneNo": "08166557788",
+  "address": "$, Herbert Macaulay Way, Yaba, Lagos"
+}
 Open the postman and test the following existing routes:
 <table>
     <tr>
@@ -126,12 +161,7 @@ Open the postman and test the following existing routes:
         <td>Create new meals</td>
     </tr>
      <!-- yet to be implemented -->
-  ## AUTHENTICATION
-  An authorization token is required to access all protected endpoints. Only the Login and Signup endpoints do not require an authorization token. The Login and Signup endpoints are used to generate Authorization Tokens.
 
-Authorization tokens expire after 48 hours after they are generated.
-
-BookAMeal expects a token to be included in all protected API requests to the server in a header that looks like the following:
     <tr>
         <td>/api/v1/signup</td>
         <td>POST</td>
