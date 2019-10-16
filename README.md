@@ -128,25 +128,23 @@ Licensed under the [MIT License](https://github.com/olorunwalawrence/book-a-meal
 
 REQUEST BODY CUSTOMER
 
-{
-  "role": "customer",
-  "firstname": "John",
-  "lastname": "Doe",
-  "email": "john@doe.com",
-  "address": "$, Herbert Macaulay Way, Yaba, Lagos",
-  "password": "emiolaolasanmi",
-}
+ * "role": "customer",
+ * "firstname": "John",
+ * "lastname": "Doe",
+ * "email": "john@doe.com",
+ * "address": "$, Herbert Macaulay Way, Yaba, Lagos",
+ * "password": "emiolaolasanmi",
+
 
 REQUEST BODY CATERER
-* [{
-  "role": "caterer",
-  "businessName": "Food Circle",
-  "email": "food@circle.com",
-  "password": "foodcircle",
-  "passwordConfirm": "foodcircle",
-  "phoneNo": "08166557788",
-  "address": "$, Herbert Macaulay Way, Yaba, Lagos"
-}]
+* "role": "caterer",
+*  "businessName": "Food Circle",
+*  "email": "food@circle.com",
+* "password": "foodcircle",
+* "passwordConfirm": "foodcircle",
+* "phoneNo": "08166557788",
+* "address": "$, Herbert Macaulay Way, Yaba, Lagos"
+  
 Open the postman and test the following existing routes:
 <table>
     <tr>
