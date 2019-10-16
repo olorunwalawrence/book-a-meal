@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/olorunwalawrence/book-a-meal.svg?branch=develop)](https://travis-ci.org/olorunwalawrence/book-a-meal)
+
 [![Coverage Status](https://coveralls.io/repos/github/olorunwalawrence/book-a-meal/badge.svg?branch=develop)](https://coveralls.io/github/olorunwalawrence/book-a-meal?branch=develop)
 
 
@@ -126,6 +126,17 @@ Open the postman and test the following existing routes:
         <td>Create new meals</td>
     </tr>
      <!-- yet to be implemented -->
+  ## AUTHENTICATION
+  An authorization token is required to access all protected endpoints. Only the Login and Signup endpoints do not require an authorization token. The Login and Signup endpoints are used to generate Authorization Tokens.
+
+Authorization tokens expire after 48 hours after they are generated.
+
+BookAMeal expects a token to be included in all protected API requests to the server in a header that looks like the following:
+    <tr>
+        <td>/api/v1/signup</td>
+        <td>POST</td>
+        <td>Sign up user</td>
+    </tr>
     <tr>
         <td>/api/v1/login</td>
         <td>POST</td>
