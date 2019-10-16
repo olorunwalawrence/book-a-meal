@@ -131,6 +131,21 @@ REQUEST BODY CUSTOMER
 REQUEST BODY CATERER
 * role = "caterer", firstname, lastname,email,password  
 
+## Signin
+REQUEST BODY
+* EMAIL, PASSWORD
+
+## GET ALL MEAL
+* Get all meals that beong to the Caterer. Only the caterers can interact with this endpoint
+
+ HTTP Request
+* Endpoint: /meals
+* Verb: GET
+* Body: (application/json)
+
+ HTTP Response
+* Status Code: 200
+* Body: (application/json)
 
 Open the postman and test the following existing routes:
 
@@ -147,11 +162,10 @@ Open the postman and test the following existing routes:
         <td>Create new meals</td>
     </tr>
      <!-- yet to be implemented -->
-
-    <tr>
+      <tr>
         <td>/api/v1/signup</td>
         <td>POST</td>
-        <td>Sign up user</td>
+        <td>Signup in user</td>
     </tr>
     <tr>
         <td>/api/v1/login</td>
