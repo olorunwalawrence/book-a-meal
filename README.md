@@ -43,7 +43,11 @@
 ## Getting Started
 
 ### Installation
-
+Download Nodejs app on your local machine
+<li><a href="https://git-scm.com/downloads">Download git bash terminal on your local machine</a></li>
+<li><a href="https://www.getpostman.com/apps">Download postman app on your local machine so that you can test your routes</a></li>
+</ul>
+* After downloading the nodejs app, you will automatically have npm installed already. Npm, is node package manager.
 * Install [NodeJS](https://nodejs.org/) and [PostgreSQL](https://www.postgresql.org/) on your computer
 * Install [Sequelize-CLI](https://www.npmjs.com/package/sequelize-cli) globally
 * Clone this repository using `git clone https://github.com/olorunwalawrence/book-a-meal.git`
